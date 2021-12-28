@@ -1,4 +1,6 @@
 {
-  "appName": "GetX Demo App",
-  "postTitle" : "POSTS"
+  "appName": "GetX Pattern Demo",
+  "postTitle" : "POSTS",
+  "postDetailsTitle" : "POST DETAILS",
+  "splashTitle": "GetX"
 }

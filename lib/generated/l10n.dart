@@ -50,10 +50,10 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `GetX Demo App`
+  /// `GetX Pattern Demo`
   String get appName {
     return Intl.message(
-      'GetX Demo App',
+      'GetX Pattern Demo',
       name: 'appName',
       desc: '',
       args: [],
@@ -65,6 +65,26 @@ class S {
     return Intl.message(
       'POSTS',
       name: 'postTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `POST DETAILS`
+  String get postDetailsTitle {
+    return Intl.message(
+      'POST DETAILS',
+      name: 'postDetailsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GetX`
+  String get splashTitle {
+    return Intl.message(
+      'GetX',
+      name: 'splashTitle',
       desc: '',
       args: [],
     );

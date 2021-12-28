@@ -3,6 +3,7 @@ import 'package:domain/error/app_error.dart';
 import 'package:domain/model/error_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:getx_pattern_demo/constants/app_colors.dart';
 import 'base_vm.dart';
 import 'base_widget.dart';
@@ -43,20 +44,17 @@ B extends BasePage<VM>> extends BasePageState<VM, B> {
 
   /// Actual Screen which load scaffold and load UI
   Widget _getLayout() {
-    return BaseWidget<VM>(
-        onModelReady: _onBaseModelReady,
-        builder: (BuildContext context, VM model) {
-          return SafeArea(
-            child: Scaffold(
-              key: _scaffoldKey,
-              appBar: buildAppbar(),
-              extendBodyBehindAppBar: extendBodyBehindAppBar(),
-              body: _buildScaffoldBody(context, model),
-              drawer: buildDrawer(),
-              drawerEnableOpenDragGesture: drawerEnableOpenDragGesture(),
-            ),
-          );
-        });
+    return SafeArea(
+      child: Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: AppColors.darkGreyShade,
+        appBar: buildAppbar(),
+        extendBodyBehindAppBar: extendBodyBehindAppBar(),
+        body: _buildScaffoldBody(context),
+        drawer: buildDrawer(),
+        drawerEnableOpenDragGesture: drawerEnableOpenDragGesture(),
+      ),
+    );
   }
 
   /// Building a appbar of screen
@@ -77,22 +75,23 @@ B extends BasePage<VM>> extends BasePageState<VM, B> {
     return false;
   }
 
-  Widget _buildScaffoldBody(BuildContext context, VM model) {
-    return buildView(context, model);
+  Widget _buildScaffoldBody(BuildContext context) {
+    return buildView(context);
   }
 
   @mustCallSuper
-  Widget buildView(BuildContext context, VM model);
+  Widget buildView(BuildContext context);
 
-  void _onBaseModelReady(VM model) {
-    _viewModel = model;
-    model.error.listen((event) {
+  @override
+  void initState() {
+    super.initState();
+    _viewModel = Get.find<VM>();
+    _viewModel?.error.listen((event) {
       showSnackBar(event.error.message ?? 'There was an unexpected error');
     });
-    model.toast.listen((message) {
+    _viewModel?.toast.listen((message) {
       showSnackBar(message);
     });
-    onModelReady(model);
   }
 
   showSnackBar(String message) {
@@ -125,44 +124,16 @@ B extends BasePage<VM>> extends BasePageState<VM, B> {
     }
     return Future.value(true);
   }
-
-  /*Mandatory*/
-
-  /// You can setup load something when model is ready, Ex: Load or fetch some data from remote layer
-  void onModelReady(VM model) {}
-
 }
 
-abstract class BasePageViewWidget<T extends BasePageViewModel> extends Widget {
-  BasePageViewWidget({Key? key}) : super(key: key);
+abstract class BasePageViewWidget<T extends BasePageViewModel>
+    extends GetView<T> {
 
   @protected
-  Widget build(BuildContext context, T model);
+  Widget builder(BuildContext context, T getXController);
+
+  BasePageViewWidget({Key? key,}) : super(key: key);
 
   @override
-  DataProviderElement<T> createElement() =>
-      DataProviderElement<T>(this);
-}
-
-class DataProviderElement<T extends BasePageViewModel>
-    extends ComponentElement {
-
-  late BasePageViewWidget _basePageViewWidget;
-
-  DataProviderElement(BasePageViewWidget widget)
-      : super(widget){
-    _basePageViewWidget = widget;
-  }
-
-  @override
-  BasePageViewWidget get widget => _basePageViewWidget;
-
-  @override
-  Widget build() {
-    return BaseWidget<T>(
-      builder: (context, model) {
-        return widget.build(this, model);
-      },
-    );
-  }
+  Widget build(BuildContext context) => Obx(() => builder(context, controller));
 }

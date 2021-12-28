@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.getx_pattern_demo">
-   <application
-        android:label="getx_pattern_demo"
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:label="Getx_demo"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -10,5 +10,6 @@ class AppColors {
   static const Color white = Color.fromRGBO(252, 252, 250, 1);
   static const Color vividYellow = Color.fromRGBO(195, 230, 23, 1);
   static const Color greenDark = Color.fromRGBO(46, 139, 53, 1);
+  static const Color darkGreyShade = Color.fromRGBO(48, 48, 48, 1);
   static const Color primaryColor = vividYellow;
 }

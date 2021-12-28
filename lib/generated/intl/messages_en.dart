@@ -21,7 +21,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "appName": MessageLookupByLibrary.simpleMessage("GetX Demo App"),
-        "postTitle": MessageLookupByLibrary.simpleMessage("POSTS")
+        "appName": MessageLookupByLibrary.simpleMessage("GetX Pattern Demo"),
+        "postDetailsTitle":
+            MessageLookupByLibrary.simpleMessage("POST DETAILS"),
+        "postTitle": MessageLookupByLibrary.simpleMessage("POSTS"),
+        "splashTitle": MessageLookupByLibrary.simpleMessage("GetX")
       };
 }
